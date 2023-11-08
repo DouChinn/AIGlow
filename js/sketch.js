@@ -39,7 +39,7 @@ function setup() {
     //         }
     //     }
     // }
- 
+
 }
 
 function windowResized() {
@@ -118,6 +118,7 @@ function drawLandmarks(detections) {
         drawPart(rightEye, true);
         drawPart(rightEyeBrow, false);
 
+        drawTags(mouth);
     }
 
 }
@@ -149,13 +150,15 @@ function printWhatWeGot(detections) {
 
 
 
-function drawTags() {
-    // if (detections.length > 0) {
-    //     // Choose the first detection to draw the tag on.
-    //     const mouthPoints = detections[0].parts.mouth; // Use the first detection for simplicity.
-        
+function drawTags(feature) {
+
+    let randomIndex = random(0, feature.length);
+
+    fill(213);
+
+    text("mouth", feature[randomIndex]._x, feature[randomIndex]._y);
+
     //     // Select a random point from the mouth points.
-    //     let randomIndex = Math.floor(Math.random() * mouthPoints.length);
     //     let randomPoint = mouthPoints[randomIndex];
 
     //     // Use the selected point's coordinates to draw the text tag.
@@ -168,9 +171,7 @@ function drawTags() {
     // }
 
 
-    fill(213);
 
-    Text("mouth", 200, 100);
 
 }
 
