@@ -8,10 +8,9 @@ let video;
 let detections;
 
 /// Function to fetch JSON content
-function preLoadJson() {
-    descriptions = loadJSON("../json/facial_descriptions_detailed.json");
-    console.log("hello",descriptions);
-  }
+function preload() {
+    descriptions = loadJSON("json/facial_descriptions_detailed.json");
+}
 
 
 // by default all options are set to true
@@ -31,7 +30,16 @@ function setup() {
     video.hide(); // Hide the video element, and just show the canvas
     faceapi = ml5.faceApi(video, detection_options, modelReady)
     textAlign(RIGHT);
-    
+
+    // Ensure descriptions is loaded before accessing it
+    if (descriptions) {
+        for (let key in descriptions) {
+            for (let i = 0; i < descriptions[key].length; i++) {
+                console.log(key + ": " + descriptions[key][i]);
+            }
+        }
+    }
+
 
 }
 
@@ -58,11 +66,11 @@ function gotResults(err, result) {
 
     // background(220);
     // background(255);
-    image(video, 0,0, width, height)
+    image(video, 0, 0, width, height)
     if (detections) {
         if (detections.length > 0) {
             // console.log(detections)
-          
+
             //yuhan: the square box on detected face
             // drawBox(detections)
             //yuhan: depicted facial features, eyes, lips...
@@ -73,31 +81,31 @@ function gotResults(err, result) {
     faceapi.detect(gotResults)
 }
 
-function drawBox(detections){
-    for(let i = 0; i < detections.length; i++){
+function drawBox(detections) {
+    for (let i = 0; i < detections.length; i++) {
         const alignedRect = detections[i].alignedRect;
         const x = alignedRect._box._x
         const y = alignedRect._box._y
         const boxWidth = alignedRect._box._width
-        const boxHeight  = alignedRect._box._height
-        
+        const boxHeight = alignedRect._box._height
+
         noFill();
         stroke(161, 95, 251);
         strokeWeight(2);
         rect(x, y, boxWidth, boxHeight);
     }
-    
+
 }
 
-function drawLandmarks(detections){
+function drawLandmarks(detections) {
     noFill();
     stroke(61, 95, 251)
     strokeWeight(2)
 
-    for(let i = 0; i < detections.length; i++){
-      
+    for (let i = 0; i < detections.length; i++) {
+
         //yuhan: FACIAL FEATURES
-        const mouth = detections[i].parts.mouth; 
+        const mouth = detections[i].parts.mouth;
         const nose = detections[i].parts.nose;
         const leftEye = detections[i].parts.leftEye;
         const rightEye = detections[i].parts.rightEye;
@@ -106,36 +114,39 @@ function drawLandmarks(detections){
 
         drawPart(mouth, true);
         drawPart(nose, false);
-        drawPart(leftEye,true);
+        drawPart(leftEye, true);
         drawPart(leftEyeBrow, false);
         drawPart(rightEye, true);
         drawPart(rightEyeBrow, false);
-      
+
     }
 
 }
 
-function drawPart(feature, closed){
-    
+function drawPart(feature, closed) {
+
     beginShape();
-    for(let i = 0; i < feature.length; i++){
+    for (let i = 0; i < feature.length; i++) {
         const x = feature[i]._x
         const y = feature[i]._y
         vertex(x, y)
     }
-    
-    if(closed === true){
+
+    if (closed === true) {
         endShape(CLOSE);
     } else {
         endShape();
     }
-    
+
 }
-  
-  
-  function printWhatWeGot(detections){
-    for (i=0; i<detection.lenth; i++){
-      detections[i].parts.mouth;
+
+
+function printWhatWeGot(detections) {
+    for (i = 0; i < detection.lenth; i++) {
+        detections[i].parts.mouth;
     }
-       
-  }
+
+}
+
+
+
