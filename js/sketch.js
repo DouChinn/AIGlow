@@ -8,6 +8,7 @@ let video;
 let detections;
 let mouth, nose, leftEye, rightEye, rightEyeBrow, leftEyeBrow;
 
+let readyToDrawTags = false; // A flag to indicate when it's safe to draw tags
 
 /// Function to fetch JSON content
 function preload() {
@@ -47,6 +48,17 @@ function setup() {
 
 }
 
+// When the mouse is pressed, stop the loop
+function mousePressed() {
+    noLoop();
+}
+
+// When the mouse is released, start the loop again
+function mouseReleased() {
+    loop();
+}
+
+
 function windowResized() {
     CanvasWidth = window.innerWidth * 0.9;
     CanvasHeight = window.innerHeight * 0.9;
@@ -68,21 +80,21 @@ function gotResults(err, result) {
     // console.log(result)
     detections = result;
 
-    // background(220);
-    // background(255);
+
     image(video, 0, 0, width, height)
-    if (detections) {
-        if (detections.length > 0) {
-            // console.log(detections)
+    
+    if (detections && detections.length > 0) {
+        // Draw landmarks for the detected face
+        drawLandmarks(detections);
 
-            //yuhan: the square box on detected face
-            // drawBox(detections)
-            //yuhan: depicted facial features, eyes, lips...
-            drawLandmarks(detections)
-        }
-
+        // After drawing landmarks, it's safe to draw tags
+        readyToDrawTags = true;
+    } else {
+        readyToDrawTags = false;
     }
+
     faceapi.detect(gotResults)
+
 }
 
 function drawBox(detections) {
@@ -127,6 +139,7 @@ function drawLandmarks(detections) {
 
 }
 
+
 function drawPart(feature, closed) {
 
     beginShape();
@@ -155,6 +168,11 @@ function printWhatWeGot(detections) {
 
 function drawTag(feature) {
 
+    // Check if feature is defined and has points
+    if (!feature || feature.length == 0) {
+        console.log('No feature points available to draw tag.');
+        return;
+    }
     console.log("draTag");
     // 1. Generate a random index for facial feature descriptions
     const randomIndex = Math.floor(Math.random() * feature.length);
@@ -182,11 +200,15 @@ function drawTag(feature) {
 
 function draw() {
 
-
-    noLoop();
-    drawTag(mouth);
-    drawTag(leftEye);
-
+    // Check the flag before drawing tags
+    if (readyToDrawTags) {
+        drawTag(mouth);
+        drawTag(leftEye);
+        drawTag(rightEye);
+        drawTag(leftEyeBrow);
+        drawTag(rightEyeBrow);
+        readyToDrawTags = false; // Reset the flag until the next detection
+    }
 }
 
 
