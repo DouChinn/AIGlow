@@ -129,6 +129,7 @@ function drawPart(feature, closed) {
     for (let i = 0; i < feature.length; i++) {
         const x = feature[i]._x
         const y = feature[i]._y
+        text("nouth", x, y);
         vertex(x, y)
     }
 
@@ -149,30 +150,28 @@ function printWhatWeGot(detections) {
 }
 
 
+// function drawTags(feature) {
 
-function drawTags(feature) {
+//     let randomIndex = random(0, feature.length);
+//     fill(213);
+//     text("mouth", feature[randomIndex]._x, feature[randomIndex]._y);
 
-    let randomIndex = random(0, feature.length);
+    
+//     //     // Select a random point from the mouth points.
+//     //     let randomPoint = mouthPoints[randomIndex];
 
-    fill(213);
-
-    text("mouth", feature[randomIndex]._x, feature[randomIndex]._y);
-
-    //     // Select a random point from the mouth points.
-    //     let randomPoint = mouthPoints[randomIndex];
-
-    //     // Use the selected point's coordinates to draw the text tag.
-    //     fill(255); // Set fill color for the text, e.g., white.
-    //     noStroke(); // Ensure no outline/stroke is applied to the text.
-    //     textSize(10); // Set the text size as needed.
-    //     textAlign(CENTER, CENTER); // Align the text to center for better positioning.
-    //     text("Mouth", randomPoint._x, randomPoint._y); // Draw the text on the canvas.
-    //     console.log("Draw mouth tag done at a random point!");
-    // }
+//     //     // Use the selected point's coordinates to draw the text tag.
+//     //     fill(255); // Set fill color for the text, e.g., white.
+//     //     noStroke(); // Ensure no outline/stroke is applied to the text.
+//     //     textSize(10); // Set the text size as needed.
+//     //     textAlign(CENTER, CENTER); // Align the text to center for better positioning.
+//     //     text("Mouth", randomPoint._x, randomPoint._y); // Draw the text on the canvas.
+//     //     console.log("Draw mouth tag done at a random point!");
+//     // }
 
 
 
 
-}
+// }
 
 
