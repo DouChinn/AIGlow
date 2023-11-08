@@ -6,7 +6,6 @@ let descriptions;
 let faceapi;
 let video;
 let detections;
-
 let mouth, nose, leftEye, rightEye, rightEyeBrow, leftEyeBrow;
 
 
@@ -154,18 +153,17 @@ function printWhatWeGot(detections) {
 }
 
 
-
-function drawTag(features) {
+function drawTag(feature) {
 
     // Ensure there are points to choose from
-    if (features.length === 0) {
+    if (feature.length === 0) {
         console.log("Length0");
     }
 
     console.log("draTag");
     // 1. Generate a random index for facial feature descriptions
-    const randomIndex = Math.floor(Math.random() * features.length);
-    const randomWord = features[randomIndex];
+    const randomIndex = Math.floor(Math.random() * feature.length);
+    const randomWord = feature[randomIndex];
 
     // 2. Generate a random color
     const r = Math.floor(Math.random() * 255);
@@ -174,7 +172,7 @@ function drawTag(features) {
     const randomColor = color(r, g, b);
 
     // 3. Generate a random point within the detected feature points
-    const randomPointIndex = Math.floor(Math.random() * features.length);
+    const randomPointIndex = Math.floor(Math.random() * feature.length);
     const x = feature[randomPointIndex]._x
     const y = feature[randomPointIndex]._y
 
@@ -189,7 +187,10 @@ function drawTag(features) {
 
 function draw() {
 
+
+    noLoop();
     drawTag(mouth);
+    drawTag(leftEye);
 
 }
 
