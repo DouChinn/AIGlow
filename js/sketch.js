@@ -155,11 +155,6 @@ function printWhatWeGot(detections) {
 
 function drawTag(feature) {
 
-    // Ensure there are points to choose from
-    if (feature.length === 0) {
-        console.log("Length0");
-    }
-
     console.log("draTag");
     // 1. Generate a random index for facial feature descriptions
     const randomIndex = Math.floor(Math.random() * feature.length);
