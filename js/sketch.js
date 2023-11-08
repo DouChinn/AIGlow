@@ -129,7 +129,6 @@ function drawPart(feature, closed) {
     for (let i = 0; i < feature.length; i++) {
         const x = feature[i]._x
         const y = feature[i]._y
-        text("nouth", x, y);
         vertex(x, y)
     }
 
