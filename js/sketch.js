@@ -147,23 +147,30 @@ function printWhatWeGot(detections) {
 
 }
 
-function drawTags(detections) {
-    if (detections.length > 0) {
-        // Choose the first detection to draw the tag on.
-        const mouthPoints = detections[0].parts.mouth; // Use the first detection for simplicity.
-        
-        // Select a random point from the mouth points.
-        let randomIndex = Math.floor(Math.random() * mouthPoints.length);
-        let randomPoint = mouthPoints[randomIndex];
 
-        // Use the selected point's coordinates to draw the text tag.
-        fill(255); // Set fill color for the text, e.g., white.
-        noStroke(); // Ensure no outline/stroke is applied to the text.
-        textSize(10); // Set the text size as needed.
-        textAlign(CENTER, CENTER); // Align the text to center for better positioning.
-        text("Mouth", randomPoint._x, randomPoint._y); // Draw the text on the canvas.
-        console.log("Draw mouth tag done at a random point!");
-    }
+
+function drawTags(detections) {
+    // if (detections.length > 0) {
+    //     // Choose the first detection to draw the tag on.
+    //     const mouthPoints = detections[0].parts.mouth; // Use the first detection for simplicity.
+        
+    //     // Select a random point from the mouth points.
+    //     let randomIndex = Math.floor(Math.random() * mouthPoints.length);
+    //     let randomPoint = mouthPoints[randomIndex];
+
+    //     // Use the selected point's coordinates to draw the text tag.
+    //     fill(255); // Set fill color for the text, e.g., white.
+    //     noStroke(); // Ensure no outline/stroke is applied to the text.
+    //     textSize(10); // Set the text size as needed.
+    //     textAlign(CENTER, CENTER); // Align the text to center for better positioning.
+    //     text("Mouth", randomPoint._x, randomPoint._y); // Draw the text on the canvas.
+    //     console.log("Draw mouth tag done at a random point!");
+    // }
+
+
+    fill(213);
+
+    Text("mouth", 200, 100);
 }
 
 
