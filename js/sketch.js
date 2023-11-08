@@ -152,25 +152,16 @@ function printWhatWeGot(detections) {
 
 
 
-function drawTag(detections) {
-    // Only proceed if detections are available
-    if (!detections || detections.length === 0) {
-      return;
-    }
-  
-    // Get the features of the first detected face
-    const features = detections[0].parts;
-    const leftEye = features.leftEye;
+function drawTag(features) {
   
     // Ensure there are points to choose from
-    if (leftEye.length === 0) {
-      return;
+    if (features.length === 0) {
+      console.log("Length0");
     }
   
-    // 1. Generate a random index for 'eyes' descriptions
-    const eyeDescriptions = descriptions.eyes;
-    const randomIndex = Math.floor(Math.random() * eyeDescriptions.length);
-    const randomWord = eyeDescriptions[randomIndex];
+    // 1. Generate a random index for facial feature descriptions
+    const randomIndex = Math.floor(Math.random() * features.length);
+    const randomWord = features[randomIndex];
   
     // 2. Generate a random color
     const r = Math.floor(Math.random() * 255);
@@ -178,15 +169,17 @@ function drawTag(detections) {
     const b = Math.floor(Math.random() * 255);
     const randomColor = color(r, g, b);
   
-    // 3. Generate a random point within the detected leftEye points
-    const randomPointIndex = Math.floor(Math.random() * leftEye.length);
-    const randomPoint = leftEye[randomPointIndex];
-  
+    // 3. Generate a random point within the detected feature points
+    const randomPointIndex = Math.floor(Math.random() * features.length);
+    const x = feature[randomPointIndex]._x
+    const y = feature[randomPointIndex]._y
+   
+
     // 4. Draw the text at the point in that color
     fill(randomColor);
     noStroke();
     textSize(18); // You can adjust the size of the text as needed
-    text(randomWord, randomPoint._x, randomPoint._y);
+    text(randomWord, x, y);
   }
   
 
