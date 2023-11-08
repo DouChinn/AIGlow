@@ -40,6 +40,8 @@ function setup() {
     //     }
     // }
 
+    drawTag(mouth);
+
     // your setup code here
     setTimeout(triggerEffect, 12000); // Set a timer for 2 minutes
 
@@ -159,6 +161,7 @@ function drawTag(features) {
       console.log("Length0");
     }
   
+    console.log("draTag");
     // 1. Generate a random index for facial feature descriptions
     const randomIndex = Math.floor(Math.random() * features.length);
     const randomWord = features[randomIndex];
