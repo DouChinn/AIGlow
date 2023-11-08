@@ -39,7 +39,10 @@ function setup() {
     //         }
     //     }
     // }
- 
+
+    // your setup code here
+    setTimeout(triggerEffect, 12000); // Set a timer for 2 minutes
+
 }
 
 function windowResized() {
@@ -153,7 +156,7 @@ function drawTags() {
     // if (detections.length > 0) {
     //     // Choose the first detection to draw the tag on.
     //     const mouthPoints = detections[0].parts.mouth; // Use the first detection for simplicity.
-        
+
     //     // Select a random point from the mouth points.
     //     let randomIndex = Math.floor(Math.random() * mouthPoints.length);
     //     let randomPoint = mouthPoints[randomIndex];
@@ -175,3 +178,7 @@ function drawTags() {
 }
 
 
+function triggerEffect() {
+    // the effect you want to activate after 2 minutes
+    console.log("Effect triggered after 2 minutes!");
+  }
