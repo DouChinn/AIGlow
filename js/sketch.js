@@ -149,7 +149,7 @@ function printWhatWeGot(detections) {
 
 
 
-function drawTags(detections) {
+function drawTags() {
     // if (detections.length > 0) {
     //     // Choose the first detection to draw the tag on.
     //     const mouthPoints = detections[0].parts.mouth; // Use the first detection for simplicity.
@@ -171,6 +171,7 @@ function drawTags(detections) {
     fill(213);
 
     Text("mouth", 200, 100);
+
 }
 
 
