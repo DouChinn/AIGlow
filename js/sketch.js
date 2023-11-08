@@ -152,33 +152,47 @@ function printWhatWeGot(detections) {
 
 
 
-function drawTags() {
-    // if (detections.length > 0) {
-    //     // Choose the first detection to draw the tag on.
-    //     const mouthPoints = detections[0].parts.mouth; // Use the first detection for simplicity.
-
-    //     // Select a random point from the mouth points.
-    //     let randomIndex = Math.floor(Math.random() * mouthPoints.length);
-    //     let randomPoint = mouthPoints[randomIndex];
-
-    //     // Use the selected point's coordinates to draw the text tag.
-    //     fill(255); // Set fill color for the text, e.g., white.
-    //     noStroke(); // Ensure no outline/stroke is applied to the text.
-    //     textSize(10); // Set the text size as needed.
-    //     textAlign(CENTER, CENTER); // Align the text to center for better positioning.
-    //     text("Mouth", randomPoint._x, randomPoint._y); // Draw the text on the canvas.
-    //     console.log("Draw mouth tag done at a random point!");
-    // }
-
-
-    fill(213);
-
-    Text("mouth", 200, 100);
-
-}
+function drawTag(detections) {
+    // Only proceed if detections are available
+    if (!detections || detections.length === 0) {
+      return;
+    }
+  
+    // Get the features of the first detected face
+    const features = detections[0].parts;
+    const leftEye = features.leftEye;
+  
+    // Ensure there are points to choose from
+    if (leftEye.length === 0) {
+      return;
+    }
+  
+    // 1. Generate a random index for 'eyes' descriptions
+    const eyeDescriptions = descriptions.eyes;
+    const randomIndex = Math.floor(Math.random() * eyeDescriptions.length);
+    const randomWord = eyeDescriptions[randomIndex];
+  
+    // 2. Generate a random color
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+    const randomColor = color(r, g, b);
+  
+    // 3. Generate a random point within the detected leftEye points
+    const randomPointIndex = Math.floor(Math.random() * leftEye.length);
+    const randomPoint = leftEye[randomPointIndex];
+  
+    // 4. Draw the text at the point in that color
+    fill(randomColor);
+    noStroke();
+    textSize(18); // You can adjust the size of the text as needed
+    text(randomWord, randomPoint._x, randomPoint._y);
+  }
+  
 
 
 function triggerEffect() {
     // the effect you want to activate after 2 minutes
     console.log("Effect triggered after 2 minutes!");
   }
+
