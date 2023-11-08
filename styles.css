@@ -1,0 +1,92 @@
+body {
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+  background-color: #f7f7f7;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+
+  margin: 2em;
+}
+
+.slogan {
+  font-size: 4em;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #000000;
+}
+
+.slogan2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold ;
+  color: #111104;
+
+}
+
+.got-it {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 2em;
+  cursor: pointer;
+  text-align: center;
+
+}
+
+.got-it:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+/* CSS */
+.got-it {
+  font-family: 'Times New Roman', Times, serif;
+
+  align-self: center;
+  background-color: #fff;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: #41403e;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: .75rem;
+  text-decoration: none;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  font-weight: normal;
+}
+
+.got-it:hover {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+}
+
+.got-it:focus {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
