@@ -31,15 +31,14 @@ function setup() {
     faceapi = ml5.faceApi(video, detection_options, modelReady)
     textAlign(RIGHT);
 
-    // Ensure descriptions is loaded before accessing it
-    if (descriptions) {
-        for (let key in descriptions) {
-            for (let i = 0; i < descriptions[key].length; i++) {
-                console.log(key + ": " + descriptions[key][i]);
-            }
-        }
-    }
-
+    // // Ensure descriptions is loaded before accessing it
+    // if (descriptions) {
+    //     for (let key in descriptions) {
+    //         for (let i = 0; i < descriptions[key].length; i++) {
+    //             console.log(key + ": " + descriptions[key][i]);
+    //         }
+    //     }
+    // }
 
 }
 
@@ -148,5 +147,23 @@ function printWhatWeGot(detections) {
 
 }
 
+
+function drawTags(detections) {
+  
+
+    let num = random(0, detections.length);
+
+    const mouth = detections[0].parts.mouth;
+    // const nose = detections[num].parts.nose;
+    // const leftEye = detections[num].parts.leftEye;
+    // const rightEye = detections[num].parts.rightEye;
+    // const rightEyeBrow = detections[num].parts.rightEyeBrow;
+    // const leftEyeBrow = detections[num].parts.leftEyeBrow;
+
+    Text("Nose", mouth[num]._x, mouth[num]._y);
+    // Text(mouth, descriptions.nose[num]);
+    console.log("Draw nose done!");
+
+}
 
 
