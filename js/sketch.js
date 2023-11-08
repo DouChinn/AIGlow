@@ -7,6 +7,9 @@ let faceapi;
 let video;
 let detections;
 
+let mouth, nose, leftEye, rightEye, rightEyeBrow, leftEyeBrow;
+
+
 /// Function to fetch JSON content
 function preload() {
     descriptions = loadJSON("json/facial_descriptions_detailed.json");
@@ -39,8 +42,6 @@ function setup() {
     //         }
     //     }
     // }
-
-    drawTag(mouth);
 
     // your setup code here
     setTimeout(triggerEffect, 12000); // Set a timer for 2 minutes
@@ -109,12 +110,12 @@ function drawLandmarks(detections) {
     for (let i = 0; i < detections.length; i++) {
 
         //yuhan: FACIAL FEATURES
-        const mouth = detections[i].parts.mouth;
-        const nose = detections[i].parts.nose;
-        const leftEye = detections[i].parts.leftEye;
-        const rightEye = detections[i].parts.rightEye;
-        const rightEyeBrow = detections[i].parts.rightEyeBrow;
-        const leftEyeBrow = detections[i].parts.leftEyeBrow;
+        mouth = detections[i].parts.mouth;
+        nose = detections[i].parts.nose;
+        leftEye = detections[i].parts.leftEye;
+        rightEye = detections[i].parts.rightEye;
+        rightEyeBrow = detections[i].parts.rightEyeBrow;
+        leftEyeBrow = detections[i].parts.leftEyeBrow;
 
         drawPart(mouth, true);
         drawPart(nose, false);
@@ -155,39 +156,45 @@ function printWhatWeGot(detections) {
 
 
 function drawTag(features) {
-  
+
     // Ensure there are points to choose from
     if (features.length === 0) {
-      console.log("Length0");
+        console.log("Length0");
     }
-  
+
     console.log("draTag");
     // 1. Generate a random index for facial feature descriptions
     const randomIndex = Math.floor(Math.random() * features.length);
     const randomWord = features[randomIndex];
-  
+
     // 2. Generate a random color
     const r = Math.floor(Math.random() * 255);
     const g = Math.floor(Math.random() * 255);
     const b = Math.floor(Math.random() * 255);
     const randomColor = color(r, g, b);
-  
+
     // 3. Generate a random point within the detected feature points
     const randomPointIndex = Math.floor(Math.random() * features.length);
     const x = feature[randomPointIndex]._x
     const y = feature[randomPointIndex]._y
-   
+
 
     // 4. Draw the text at the point in that color
     fill(randomColor);
     noStroke();
     textSize(18); // You can adjust the size of the text as needed
     text(randomWord, x, y);
-  }
-  
+}
+
+
+function draw() {
+
+    drawTag(mouth);
+
+}
 
 
 function triggerEffect() {
     // the effect you want to activate after 2 minutes
     console.log("Effect triggered after 2 minutes!");
-  }
+}
