@@ -1,14 +1,31 @@
-let CanvasHeight = window.innerHeight * 0.7;
+// basical canvas setting
+let CanvasHeight = window.innerHeight * 0.8;
 let CanvasWidth = window.innerWidth * 0.7;
 
+// json data storage
 let descriptions;
 
+// api and relevant parameters
 let faceapi;
 let video;
 let detections;
 let mouth, nose, leftEye, rightEye, rightEyeBrow, leftEyeBrow;
 
+// call drawTags function
 let readyToDrawTags = false; // A flag to indicate when it's safe to draw tags
+
+// black screen activity
+let blackScreenActive = false;
+let blackScreenStartTime = 0;
+const blackScreenDuration = 20000; // 20 seconds
+
+// typewriter effect
+let typewriterText = "DO YOU ENJOY YOUR ANALYSIS? WHAT IS REALLY HAPPENING?";
+let currentTextLength = 0;
+let lastTimeLetterAdded = 0;
+const letterInterval = 150; // Time in milliseconds between letters
+
+
 
 /// Function to fetch JSON content
 function preload() {
@@ -36,13 +53,16 @@ function setup() {
     faceapi = ml5.faceApi(video, detection_options, modelReady)
     textAlign(RIGHT);
 
-    setTimeout(triggerEffect, 12000); // Set a timer for 2 minutes
+    setTimeout(triggerEffect, 12000); // Set a timer for 12s
+
+    textFont('Times New Roman');
+
 
 }
 
 
 function windowResized() {
-  
+
     resizeCanvas(CanvasWidth, CanvasHeight);
     select('canvas').style('margin-top', (window.innerHeight - height) / 2 + 'px'); // Adjust vertical centering on resize
 
@@ -65,7 +85,7 @@ function gotResults(err, result) {
 
 
     image(video, 0, 0, width, height)
-    
+
     if (detections && detections.length > 0) {
 
         // Draw landmarks for the detected face
@@ -151,11 +171,41 @@ function printWhatWeGot(detections) {
 
 
 
-
 function draw() {
-    // ... your existing drawing code ...
+    if (blackScreenActive && millis() - blackScreenStartTime < blackScreenDuration) {
+        background(0); // Set the background to black
+        fill(255); // Set the text color to white
+        textSize(36); // Set the text size
+        textFont('Times New Roman');
+        textAlign(CENTER, CENTER);
 
-    drawFeatures(); // Call drawFeatures within the draw loop
+        // Split the text into two parts
+        let part1 = "DO YOU ENJOY YOUR ANALYSIS?";
+        let part2 = "WHAT IS REALLY HAPPENING?";
+
+        // Calculate the current length for each part
+        let currentLengthPart1 = min(currentTextLength, part1.length);
+        let currentLengthPart2 = max(0, currentTextLength - part1.length);
+
+        // Check if it's time to add a new letter
+        if (millis() - lastTimeLetterAdded > letterInterval && currentTextLength < typewriterText.length) {
+            currentTextLength++;
+            lastTimeLetterAdded = millis();
+        }
+
+        // Display the current substring of each part
+        text(part1.substring(0, currentLengthPart1), width / 2, height / 2 - 20);
+        if (currentLengthPart1 === part1.length) {
+            text(part2.substring(0, currentLengthPart2), width / 2, height / 2 + 20);
+        }
+    } else if (blackScreenActive) {
+        // Reset everything once the duration is over
+        blackScreenActive = false;
+        currentTextLength = 0;
+        lastTimeLetterAdded = 0;
+    } else {
+        drawFeatures(); // Call drawFeatures within the draw loop
+    }
 }
 
 
@@ -183,8 +233,7 @@ function drawTag(feature, name) {
         console.log('No feature points available to draw tag.');
         return;
     }
-    
-    console.log("drawTag");
+
     // 1. Generate a random index for facial feature descriptions
     const randomIndex = Math.floor(Math.random() * descriptions[name].length);
     const randomWord = descriptions[name][randomIndex];
@@ -208,20 +257,8 @@ function drawTag(feature, name) {
 }
 
 
-
-
-// function drawSpy(){
-//     let question = "WHAT IS REALLY HAPPENING?";
-
-//     text(CanvasHeight/2, CanvasWidth/2, question);
-
-// }
-
-
 function triggerEffect() {
-    // the effect you want to activate after 1 minutes
-    console.log("Effect triggered after 1 minutes!");
-    // readyToDrawTags = false;
-    // drawSpy();
-
+    console.log("Effect triggered after 12s!");
+    blackScreenActive = true;
+    blackScreenStartTime = millis();
 }
