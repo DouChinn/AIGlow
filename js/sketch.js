@@ -9,7 +9,6 @@ let detections;
 let mouth, nose, leftEye, rightEye, rightEyeBrow, leftEyeBrow;
 
 let readyToDrawTags = false; // A flag to indicate when it's safe to draw tags
-let refreshTags = false;
 
 /// Function to fetch JSON content
 function preload() {
@@ -37,19 +36,13 @@ function setup() {
     faceapi = ml5.faceApi(video, detection_options, modelReady)
     textAlign(RIGHT);
 
-    // Set an interval to refresh tags every 2 seconds
-    setInterval(() => {
-        refreshTags = true;
-    }, 1000);
-
-
     setTimeout(triggerEffect, 12000); // Set a timer for 2 minutes
 
 }
 
 
 function windowResized() {
-
+  
     resizeCanvas(CanvasWidth, CanvasHeight);
     select('canvas').style('margin-top', (window.innerHeight - height) / 2 + 'px'); // Adjust vertical centering on resize
 
@@ -72,7 +65,7 @@ function gotResults(err, result) {
 
 
     image(video, 0, 0, width, height)
-
+    
     if (detections && detections.length > 0) {
 
         // Draw landmarks for the detected face
@@ -160,10 +153,9 @@ function printWhatWeGot(detections) {
 
 
 function draw() {
+    // ... your existing drawing code ...
 
-    if (refreshTags) {
-        drawFeatures(); // This will now only execute when refreshTags is true
-    }
+    drawFeatures(); // Call drawFeatures within the draw loop
 }
 
 
@@ -172,16 +164,14 @@ function draw() {
 function drawFeatures() {
 
     // Check the flag before drawing tags
-    if (readyToDrawTags && refreshTags) {
+    if (readyToDrawTags) {
         drawTag(nose, "nose");
         drawTag(mouth, "mouth");
         drawTag(leftEye, "leftEye");
         drawTag(rightEye, "rightEye");
         drawTag(leftEyeBrow, "leftEyeBrow");
         drawTag(rightEyeBrow, "rightEyeBrow");
-
         readyToDrawTags = false; // Reset the flag until the next detection
-        refreshTags = false; // Reset the refresh flag
     }
 }
 
@@ -193,7 +183,7 @@ function drawTag(feature, name) {
         console.log('No feature points available to draw tag.');
         return;
     }
-
+    
     console.log("drawTag");
     // 1. Generate a random index for facial feature descriptions
     const randomIndex = Math.floor(Math.random() * descriptions[name].length);
