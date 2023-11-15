@@ -22,9 +22,6 @@ const blackScreenDuration = 20000; // 20 seconds
 let lastLetterDisplayedTime = 0;
 
 
-// typewriter effect
-// let typewriterText = "DO YOU ENJOY YOUR ANALYSIS? WHAT IS REALLY HAPPENING?";
-
 // Split the text into two parts
 let part1 = "DO YOU ENJOY YOUR ANALYSIS?";
 let part2 = "WHAT IS REALLY HAPPENING?";
@@ -32,9 +29,9 @@ let currentTextLength = 0;
 let lastTimeLetterAdded = 0;
 const letterInterval = 150; // Time in milliseconds between letters
 
-
 // Flag to control the appearance of environment words
-let startEnvironmentWords = false;
+let environmentWordsActive = false;
+
 let displayedWords = [];
 
 
@@ -223,6 +220,7 @@ function draw() {
             currentTextLength = 0;
             lastTimeLetterAdded = 0;
             lastLetterDisplayedTime = 0;
+            environmentWordsActive = true; // Enable environment words after black screen ends
         }
     }
     else if (blackScreenActive) {
@@ -231,90 +229,102 @@ function draw() {
         currentTextLength = 0;
         lastTimeLetterAdded = 0;
         lastLetterDisplayedTime = 0;
-    }
-    else {
+    } else {
         drawFeatures(); // Call drawFeatures within the draw loop
-        drawRandomEnvironmentWords(); // Add random environment words to the array
-        drawStoredWords(); // Draw words stored in the array
-    }
-}
 
-
-
-function drawFeatures() {
-
-    // Check the flag before drawing tags
-    if (readyToDrawTags) {
-        drawTag(nose, "nose");
-        drawTag(mouth, "mouth");
-        drawTag(leftEye, "leftEye");
-        drawTag(rightEye, "rightEye");
-        drawTag(leftEyeBrow, "leftEyeBrow");
-        drawTag(rightEyeBrow, "rightEyeBrow");
-        readyToDrawTags = false; // Reset the flag until the next detection
-    }
-}
-
-
-function drawTag(feature, name) {
-
-    // Check if feature is defined and has points
-    if (!feature || feature.length == 0) {
-        console.log('No feature points available to draw tag.');
-        return;
+        if (environmentWordsActive) {
+            drawRandomEnvironmentWords(); 
+            drawStoredWords(); // Draw words stored in the array
+            drawWebcam();
+        }
     }
 
-    // 1. Generate a random index for facial feature descriptions
-    const randomIndex = Math.floor(Math.random() * descriptions[name].length);
-    const randomWord = descriptions[name][randomIndex];
-
-    // 2. Generate a random color
-    const r = Math.floor(Math.random() * 255);
-    const g = Math.floor(Math.random() * 255);
-    const b = Math.floor(Math.random() * 255);
-    const randomColor = color(r, g, b);
-
-    // 3. Generate a random point within the detected feature points
-    const randomPointIndex = Math.floor(Math.random() * feature.length);
-    const x = feature[randomPointIndex]._x
-    const y = feature[randomPointIndex]._y
-
-    // 4. Draw the text at the point in that color
-    fill(randomColor);
-    noStroke();
-    textSize(18); // You can adjust the size of the text as needed
-    text(randomWord, x, y);
 }
 
+    function drawFeatures() {
 
-function triggerEffect() {
-    console.log("Effect triggered after 10s!");
-    blackScreenActive = true;
-    blackScreenStartTime = millis();
-}
-
-
-
-function drawRandomEnvironmentWords() {
-    if (environment && environment.words && frameCount % 100 === 0) {
-        const randomWord = random(environment.words);
-        const x = random(width);
-        const y = random(height);
-        const color = { r: random(255), g: random(255), b: random(255) }; // Assign a random color
-
-        displayedWords.push({ word: randomWord, x: x, y: y, color: color });
+        // Check the flag before drawing tags
+        if (readyToDrawTags) {
+            drawTag(nose, "nose");
+            drawTag(mouth, "mouth");
+            drawTag(leftEye, "leftEye");
+            drawTag(rightEye, "rightEye");
+            drawTag(leftEyeBrow, "leftEyeBrow");
+            drawTag(rightEyeBrow, "rightEyeBrow");
+            readyToDrawTags = false; // Reset the flag until the next detection
+        }
     }
-}
 
 
+    function drawTag(feature, name) {
 
-function drawStoredWords() {
-    for (let wordObj of displayedWords) {
-        fill(wordObj.color.r, wordObj.color.g, wordObj.color.b); // Use the assigned color
+        // Check if feature is defined and has points
+        if (!feature || feature.length == 0) {
+            console.log('No feature points available to draw tag.');
+            return;
+        }
+
+        // 1. Generate a random index for facial feature descriptions
+        const randomIndex = Math.floor(Math.random() * descriptions[name].length);
+        const randomWord = descriptions[name][randomIndex];
+
+        // 2. Generate a random color
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        const randomColor = color(r, g, b);
+
+        // 3. Generate a random point within the detected feature points
+        const randomPointIndex = Math.floor(Math.random() * feature.length);
+        const x = feature[randomPointIndex]._x
+        const y = feature[randomPointIndex]._y
+
+        // 4. Draw the text at the point in that color
+        fill(randomColor);
         noStroke();
-        textSize(28);
-        text(wordObj.word, wordObj.x, wordObj.y);
+        textSize(18); // You can adjust the size of the text as needed
+        text(randomWord, x, y);
     }
-}
+
+
+    function triggerEffect() {
+        console.log("Effect triggered after 10s!");
+        blackScreenActive = true;
+        blackScreenStartTime = millis();
+    }
+
+
+
+    function drawRandomEnvironmentWords() {
+        if (environment && environment.words && frameCount % 50 === 0) {
+            const randomWord = random(environment.words);
+            const x = random(width);
+            const y = random(height);
+            const color = { r: random(255), g: random(255), b: random(255) }; // Assign a random color
+
+            displayedWords.push({ word: randomWord, x: x, y: y, color: color });
+        }
+    }
+
+
+
+    function drawStoredWords() {
+        for (let wordObj of displayedWords) {
+            fill(wordObj.color.r, wordObj.color.g, wordObj.color.b); // Use the assigned color
+            noStroke();
+            textSize(28);
+            text(wordObj.word, wordObj.x, wordObj.y);
+        }
+    }
+
+
+    function drawWebcam(){
+        textSize(120);
+        fill(209, 209, 209,100);
+        text("BE AWARE OF", width/2, height*1/4);
+        text("WEBCAM", width/2, height*2/4);
+        text("SURVEILLANCE!!!", width/2, height*3/4);
+
+    }
 
 
