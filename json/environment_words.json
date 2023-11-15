@@ -1,0 +1,19 @@
+{
+    "words": [
+        "sunny", "rainy", "cloudy", "stormy", "windy", 
+        "humid", "dry", "hot", "cold", "mild", 
+        "foggy", "icy", "snowy", "blustery", "chilly", 
+        "freezing", "scorching", "balmy", "breezy", "muggy", 
+        "drizzly", "overcast", "crisp", "brisk", "damp",
+        "antique", "modern", "rustic", "vintage", "polished", 
+        "ornate", "sleek", "cozy", "comfortable", "plush", 
+        "elegant", "stylish", "minimalist", "luxurious", "handcrafted", 
+        "sturdy", "functional", "decorative", "compact", "spacious", 
+        "inviting", "homely", "chic", "contemporary", "traditional",
+        "tranquil", "bustling", "serene", "lively", "peaceful", 
+        "noisy", "quiet", "remote", "urban", "rural", 
+        "picturesque", "crowded", "secluded", "idyllic", "sprawling", 
+        "dense", "pristine", "neglected", "well-maintained", "lush", 
+        "barren", "undeveloped", "thriving", "polluted", "unspoiled"
+    ]
+}

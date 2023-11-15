@@ -4,6 +4,7 @@ let CanvasWidth = window.innerWidth * 0.7;
 
 // json data storage
 let descriptions;
+let environment;
 
 // api and relevant parameters
 let faceapi;
@@ -18,9 +19,15 @@ let readyToDrawTags = false; // A flag to indicate when it's safe to draw tags
 let blackScreenActive = false;
 let blackScreenStartTime = 0;
 const blackScreenDuration = 20000; // 20 seconds
+let lastLetterDisplayedTime = 0;
+
 
 // typewriter effect
-let typewriterText = "DO YOU ENJOY YOUR ANALYSIS? WHAT IS REALLY HAPPENING?";
+// let typewriterText = "DO YOU ENJOY YOUR ANALYSIS? WHAT IS REALLY HAPPENING?";
+
+// Split the text into two parts
+let part1 = "DO YOU ENJOY YOUR ANALYSIS?";
+let part2 = "WHAT IS REALLY HAPPENING?";
 let currentTextLength = 0;
 let lastTimeLetterAdded = 0;
 const letterInterval = 150; // Time in milliseconds between letters
@@ -30,6 +37,7 @@ const letterInterval = 150; // Time in milliseconds between letters
 /// Function to fetch JSON content
 function preload() {
     descriptions = loadJSON("json/facial_descriptions_detailed.json");
+    environment = loadJSON("json/environment_words.json");
 }
 
 // by default all options are set to true
@@ -53,7 +61,7 @@ function setup() {
     faceapi = ml5.faceApi(video, detection_options, modelReady)
     textAlign(RIGHT);
 
-    setTimeout(triggerEffect, 12000); // Set a timer for 12s
+    setTimeout(triggerEffect, 10000); // Set a timer for 10s
 
     textFont('Times New Roman');
 
@@ -170,7 +178,6 @@ function printWhatWeGot(detections) {
 }
 
 
-
 function draw() {
     if (blackScreenActive && millis() - blackScreenStartTime < blackScreenDuration) {
         background(0); // Set the background to black
@@ -179,18 +186,22 @@ function draw() {
         textFont('Times New Roman');
         textAlign(CENTER, CENTER);
 
-        // Split the text into two parts
-        let part1 = "DO YOU ENJOY YOUR ANALYSIS?";
-        let part2 = "WHAT IS REALLY HAPPENING?";
+        // Calculate the total length of both parts
+        let totalLength = part1.length + part2.length;
 
         // Calculate the current length for each part
         let currentLengthPart1 = min(currentTextLength, part1.length);
         let currentLengthPart2 = max(0, currentTextLength - part1.length);
 
         // Check if it's time to add a new letter
-        if (millis() - lastTimeLetterAdded > letterInterval && currentTextLength < typewriterText.length) {
+        if (millis() - lastTimeLetterAdded > letterInterval && currentTextLength < totalLength) {
             currentTextLength++;
             lastTimeLetterAdded = millis();
+
+            // If the last letter is added, record the time
+            if (currentTextLength === totalLength) {
+                lastLetterDisplayedTime = millis();
+            }
         }
 
         // Display the current substring of each part
@@ -198,17 +209,31 @@ function draw() {
         if (currentLengthPart1 === part1.length) {
             text(part2.substring(0, currentLengthPart2), width / 2, height / 2 + 20);
         }
+
+        // End the black screen effect after 5 seconds of displaying the last letter
+        if (lastLetterDisplayedTime > 0 && millis() - lastLetterDisplayedTime > 5000) {
+            blackScreenActive = false;
+            currentTextLength = 0;
+            lastTimeLetterAdded = 0;
+            lastLetterDisplayedTime = 0;
+        }
     } else if (blackScreenActive) {
         // Reset everything once the duration is over
         blackScreenActive = false;
         currentTextLength = 0;
         lastTimeLetterAdded = 0;
+        lastLetterDisplayedTime = 0;
     } else {
         drawFeatures(); // Call drawFeatures within the draw loop
     }
+
+    // // Final enrivonment words display
+    // if (!blackScreenActive) {
+    //     drawRandomEnvironmentWords();
+    // }
+
+
 }
-
-
 
 
 function drawFeatures() {
@@ -258,7 +283,13 @@ function drawTag(feature, name) {
 
 
 function triggerEffect() {
-    console.log("Effect triggered after 12s!");
+    console.log("Effect triggered after 10s!");
     blackScreenActive = true;
     blackScreenStartTime = millis();
 }
+
+
+
+
+
+
