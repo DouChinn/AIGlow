@@ -217,14 +217,22 @@ function draw() {
             lastTimeLetterAdded = 0;
             lastLetterDisplayedTime = 0;
         }
-    } else if (blackScreenActive) {
+    } 
+    
+    
+    else if (blackScreenActive) {
         // Reset everything once the duration is over
         blackScreenActive = false;
         currentTextLength = 0;
         lastTimeLetterAdded = 0;
         lastLetterDisplayedTime = 0;
-    } else {
+    } 
+    
+    
+    else {
         drawFeatures(); // Call drawFeatures within the draw loop
+        drawRandomEnvironmentWords(); // Draw random environment words
+
     }
 
     // // Final enrivonment words display
@@ -289,6 +297,20 @@ function triggerEffect() {
 }
 
 
+function drawRandomEnvironmentWords() {
+    // Draw a random word every few seconds
+    if (frameCount % 10 === 0) { // Adjust the frequency as needed
+        const randomWord = random(environment.words); // Assuming environment.words is an array of words
+
+        const x = random(width);
+        const y = random(height);
+
+        fill(random(255), random(255), random(255));
+        noStroke();
+        textSize(28);
+        text(randomWord, x, y);
+    }
+}
 
 
 
