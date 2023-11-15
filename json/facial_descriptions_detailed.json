@@ -1,5 +1,5 @@
 {
-    "eyes": [
+    "leftEye": [
         "Crow's feet",
         "Puffy",
         "Wrinkled",
@@ -17,7 +17,7 @@
         "Taut",
         "Blotchy",
         "Swollen",
-        "Sclerotic yellowing (indicative of jaundice)",
+        "Sclerotic yellowing",
         "Rosy cheeks",
         "Laugh lines",
         "Furrowed (brow)",
@@ -31,14 +31,48 @@
         "Dry",
         "Saggy"
     ],
-    "eyebrows": [
+
+    "rightEye": [
+        "Crow's feet",
+        "Puffy",
+        "Wrinkled",
+        "Sunken cheeks",
+        "Dark circles",
+        "Fine lines",
+        "Sallow skin",
+        "Smooth",
+        "Ruddy complexion",
+        "Creased",
+        "Dull skin",
+        "Glowing",
+        "Freckled",
+        "Under-eye bags",
+        "Taut",
+        "Blotchy",
+        "Swollen",
+        "Sclerotic yellowing",
+        "Rosy cheeks",
+        "Laugh lines",
+        "Furrowed",
+        "Chapped",
+        "Flushed",
+        "Pale",
+        "Tired-looking",
+        "Radiant",
+        "Blemished",
+        "Moist",
+        "Dry",
+        "Saggy"
+    ],
+
+
+    "leftEyeBrow": [
         "Furrowed",
         "Wrinkled",
         "Smooth",
         "Puffy",
         "Creased",
         "Taut",
-        "Crow\u2019s feet-riddled",
         "Sun-kissed",
         "Freckled",
         "Glistening",
@@ -63,7 +97,40 @@
         "Porcelain",
         "Dappled"
     ],
-    "mouths": [
+
+    "rightEyeBrow": [
+        "Furrowed",
+        "Wrinkled",
+        "Smooth",
+        "Puffy",
+        "Creased",
+        "Taut",
+        "Sun-kissed",
+        "Freckled",
+        "Glistening",
+        "Oily",
+        "Matte",
+        "Blemished",
+        "Acne-prone",
+        "Flawless",
+        "Scarred",
+        "Sallow",
+        "Ruddy",
+        "Rosy",
+        "Bronzed",
+        "Chiseled",
+        "Dewy",
+        "Ashen",
+        "Glabrous (hairless)",
+        "Hairy",
+        "Blotchy",
+        "Lined",
+        "Weathered",
+        "Porcelain",
+        "Dappled"
+    ],
+
+    "mouth": [
         "Full-lipped",
         "Thin-lipped",
         "Chapped",
@@ -95,7 +162,7 @@
         "Furrowed",
         "Glossy"
     ],
-    "noses": [
+    "nose": [
         "Aquiline",
         "Button",
         "Roman",
@@ -110,53 +177,8 @@
         "Snub",
         "Hawk-like",
         "Long",
-        "Wide-nostriled",
-        "nose_description_16",
-        "nose_description_17",
-        "nose_description_18",
-        "nose_description_19",
-        "nose_description_20",
-        "nose_description_21",
-        "nose_description_22",
-        "nose_description_23",
-        "nose_description_24",
-        "nose_description_25",
-        "nose_description_26",
-        "nose_description_27",
-        "nose_description_28",
-        "nose_description_29",
-        "nose_description_30"
-    ],
-    "skins": [
-        "Acne-prone",
-        "Blackhead-speckled",
-        "Blemished",
-        "Blotchy",
-        "Breakout-afflicted",
-        "Chapped",
-        "Clear",
-        "Combination (referring to skin that is partly oily and partly dry)",
-        "Creased (with fine lines or wrinkles)",
-        "Dull (lacking radiance or brightness)",
-        "Flaky",
-        "Freckled",
-        "Glowing",
-        "Inflamed",
-        "Irritated",
-        "Oily",
-        "Pimpled",
-        "Pocked (marked with small pitted scars)",
-        "Porcelain (fine and pale)",
-        "Rosy (healthily pink or red)",
-        "Rough",
-        "Sallow (an unhealthy yellow or pale brown color)",
-        "Scarred",
-        "Sensitive",
-        "Smooth",
-        "Spotted (with age spots or sun spots)",
-        "Sun-damaged",
-        "Taut (firm and tight)",
-        "Uneven (in tone or texture)",
-        "Wrinkled"
+        "Wide-nostriled"
+
     ]
+   
 }

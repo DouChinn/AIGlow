@@ -1,5 +1,5 @@
-let CanvasHeight = window.innerHeight * 0.5;
-let CanvasWidth = window.innerWidth * 0.5;
+let CanvasHeight = window.innerHeight * 0.7;
+let CanvasWidth = window.innerWidth * 0.7;
 
 let descriptions;
 
@@ -15,7 +15,6 @@ function preload() {
     descriptions = loadJSON("json/facial_descriptions_detailed.json");
 }
 
-
 // by default all options are set to true
 const detection_options = {
     withLandmarks: true,
@@ -25,6 +24,9 @@ const detection_options = {
 function setup() {
     let canvas = createCanvas(CanvasWidth, CanvasHeight);
     canvas.style('display', 'block'); // Add this to prevent default styling that can affect layout
+    canvas.style('margin-left', 'auto');
+    canvas.style('margin-right', 'auto');
+    canvas.style('margin-top', (window.innerHeight - height) / 3 + 'px'); // Center vertically
     canvas.parent('canvas-container'); // Specify the ID of the div where you want the canvas to go
 
     // load up your video
@@ -34,42 +36,23 @@ function setup() {
     faceapi = ml5.faceApi(video, detection_options, modelReady)
     textAlign(RIGHT);
 
-    // // Ensure descriptions is loaded before accessing it
-    // if (descriptions) {
-    //     for (let key in descriptions) {
-    //         for (let i = 0; i < descriptions[key].length; i++) {
-    //             console.log(key + ": " + descriptions[key][i]);
-    //         }
-    //     }
-    // }
-
-    // your setup code here
     setTimeout(triggerEffect, 12000); // Set a timer for 2 minutes
 
 }
 
-// When the mouse is pressed, stop the loop
-function mousePressed() {
-    noLoop();
-}
-
-// When the mouse is released, start the loop again
-function mouseReleased() {
-    loop();
-}
-
 
 function windowResized() {
-    CanvasWidth = window.innerWidth * 0.9;
-    CanvasHeight = window.innerHeight * 0.9;
+  
     resizeCanvas(CanvasWidth, CanvasHeight);
+    select('canvas').style('margin-top', (window.innerHeight - height) / 2 + 'px'); // Adjust vertical centering on resize
+
 }
+
 
 function modelReady() {
     console.log('ready!')
     console.log(faceapi)
     faceapi.detect(gotResults)
-
 }
 
 function gotResults(err, result) {
@@ -84,6 +67,7 @@ function gotResults(err, result) {
     image(video, 0, 0, width, height)
     
     if (detections && detections.length > 0) {
+
         // Draw landmarks for the detected face
         drawLandmarks(detections);
 
@@ -97,21 +81,21 @@ function gotResults(err, result) {
 
 }
 
-function drawBox(detections) {
-    for (let i = 0; i < detections.length; i++) {
-        const alignedRect = detections[i].alignedRect;
-        const x = alignedRect._box._x
-        const y = alignedRect._box._y
-        const boxWidth = alignedRect._box._width
-        const boxHeight = alignedRect._box._height
+// function drawBox(detections) {
+//     for (let i = 0; i < detections.length; i++) {
+//         const alignedRect = detections[i].alignedRect;
+//         const x = alignedRect._box._x
+//         const y = alignedRect._box._y
+//         const boxWidth = alignedRect._box._width
+//         const boxHeight = alignedRect._box._height
 
-        noFill();
-        stroke(161, 95, 251);
-        strokeWeight(2);
-        rect(x, y, boxWidth, boxHeight);
-    }
+//         noFill();
+//         stroke(161, 95, 251);
+//         strokeWeight(2);
+//         rect(x, y, boxWidth, boxHeight);
+//     }
 
-}
+// }
 
 function drawLandmarks(detections) {
     noFill();
@@ -166,17 +150,44 @@ function printWhatWeGot(detections) {
 }
 
 
-function drawTag(feature) {
+
+
+function draw() {
+    // ... your existing drawing code ...
+
+    drawFeatures(); // Call drawFeatures within the draw loop
+}
+
+
+
+
+function drawFeatures() {
+
+    // Check the flag before drawing tags
+    if (readyToDrawTags) {
+        drawTag(nose, "nose");
+        drawTag(mouth, "mouth");
+        drawTag(leftEye, "leftEye");
+        drawTag(rightEye, "rightEye");
+        drawTag(leftEyeBrow, "leftEyeBrow");
+        drawTag(rightEyeBrow, "rightEyeBrow");
+        readyToDrawTags = false; // Reset the flag until the next detection
+    }
+}
+
+
+function drawTag(feature, name) {
 
     // Check if feature is defined and has points
     if (!feature || feature.length == 0) {
         console.log('No feature points available to draw tag.');
         return;
     }
-    console.log("draTag");
+    
+    console.log("drawTag");
     // 1. Generate a random index for facial feature descriptions
-    const randomIndex = Math.floor(Math.random() * feature.length);
-    const randomWord = feature[randomIndex];
+    const randomIndex = Math.floor(Math.random() * descriptions[name].length);
+    const randomWord = descriptions[name][randomIndex];
 
     // 2. Generate a random color
     const r = Math.floor(Math.random() * 255);
@@ -189,7 +200,6 @@ function drawTag(feature) {
     const x = feature[randomPointIndex]._x
     const y = feature[randomPointIndex]._y
 
-
     // 4. Draw the text at the point in that color
     fill(randomColor);
     noStroke();
@@ -198,21 +208,20 @@ function drawTag(feature) {
 }
 
 
-function draw() {
 
-    // Check the flag before drawing tags
-    if (readyToDrawTags) {
-        drawTag(mouth);
-        drawTag(leftEye);
-        drawTag(rightEye);
-        drawTag(leftEyeBrow);
-        drawTag(rightEyeBrow);
-        readyToDrawTags = false; // Reset the flag until the next detection
-    }
-}
+
+// function drawSpy(){
+//     let question = "WHAT IS REALLY HAPPENING?";
+
+//     text(CanvasHeight/2, CanvasWidth/2, question);
+
+// }
 
 
 function triggerEffect() {
-    // the effect you want to activate after 2 minutes
-    console.log("Effect triggered after 2 minutes!");
+    // the effect you want to activate after 1 minutes
+    console.log("Effect triggered after 1 minutes!");
+    // readyToDrawTags = false;
+    // drawSpy();
+
 }
