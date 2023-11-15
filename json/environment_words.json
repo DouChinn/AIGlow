@@ -14,6 +14,14 @@
         "noisy", "quiet", "remote", "urban", "rural", 
         "picturesque", "crowded", "secluded", "idyllic", "sprawling", 
         "dense", "pristine", "neglected", "well-maintained", "lush", 
-        "barren", "undeveloped", "thriving", "polluted", "unspoiled"
+        "barren", "undeveloped", "thriving", "polluted", "unspoiled",
+        "sofa", "bed", "chair", "table", "dresser", "wardrobe", "bookcase", "armchair", 
+        "ottoman", "bench", "stool", "desk", "coffee table", "nightstand", "sideboard", 
+        "hutch", "cabinet", "shelves", "console", "loveseat", "recliner", "chaise lounge", 
+        "futon", "bean bag", "rocking chair", "vanity", "bunk bed", "daybed", "trundle bed", 
+        "crib", "dining table", "kitchen island", "bar stool", "buffet", "mirror", "coat rack", 
+        "shoe rack", "TV stand", "sectional sofa", "sleeper sofa", "nesting tables", "patio set", 
+        "hammock", "bookshelf", "chest of drawers", "folding chair", "pouf", "accent chair", 
+        "writing desk", "pedestal"
     ]
 }

@@ -33,6 +33,13 @@ let lastTimeLetterAdded = 0;
 const letterInterval = 150; // Time in milliseconds between letters
 
 
+// Flag to control the appearance of environment words
+let startEnvironmentWords = false;
+let displayedWords = [];
+
+
+
+
 
 /// Function to fetch JSON content
 function preload() {
@@ -217,31 +224,21 @@ function draw() {
             lastTimeLetterAdded = 0;
             lastLetterDisplayedTime = 0;
         }
-    } 
-    
-    
+    }
     else if (blackScreenActive) {
         // Reset everything once the duration is over
         blackScreenActive = false;
         currentTextLength = 0;
         lastTimeLetterAdded = 0;
         lastLetterDisplayedTime = 0;
-    } 
-    
-    
+    }
     else {
         drawFeatures(); // Call drawFeatures within the draw loop
-        drawRandomEnvironmentWords(); // Draw random environment words
-
+        drawRandomEnvironmentWords(); // Add random environment words to the array
+        drawStoredWords(); // Draw words stored in the array
     }
-
-    // // Final enrivonment words display
-    // if (!blackScreenActive) {
-    //     drawRandomEnvironmentWords();
-    // }
-
-
 }
+
 
 
 function drawFeatures() {
@@ -297,21 +294,27 @@ function triggerEffect() {
 }
 
 
-function drawRandomEnvironmentWords() {
-    // Draw a random word every few seconds
-    if (frameCount % 10 === 0) { // Adjust the frequency as needed
-        const randomWord = random(environment.words); // Assuming environment.words is an array of words
 
+function drawRandomEnvironmentWords() {
+    if (environment && environment.words && frameCount % 100 === 0) {
+        const randomWord = random(environment.words);
         const x = random(width);
         const y = random(height);
+        const color = { r: random(255), g: random(255), b: random(255) }; // Assign a random color
 
-        fill(random(255), random(255), random(255));
-        noStroke();
-        textSize(28);
-        text(randomWord, x, y);
+        displayedWords.push({ word: randomWord, x: x, y: y, color: color });
     }
 }
 
 
+
+function drawStoredWords() {
+    for (let wordObj of displayedWords) {
+        fill(wordObj.color.r, wordObj.color.g, wordObj.color.b); // Use the assigned color
+        noStroke();
+        textSize(28);
+        text(wordObj.word, wordObj.x, wordObj.y);
+    }
+}
 
 
